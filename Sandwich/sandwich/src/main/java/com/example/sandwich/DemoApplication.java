@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.example.sandwich.model.Sandwiches;
+import com.example.sandwich.workers.SandwichWorker;
+import java.util.List;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -19,11 +22,15 @@ public class DemoApplication {
     	Connection connection = null;
 		
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite:/home/alex/android/Sandwich/sandwich/src/main/resources/sandw.db");
+			connection = DriverManager.getConnection("jdbc:sqlite:/home/alex/android/Sandwich-1/Sandwich/sandwich/src/main/resources/sandw.db");
       		Statement statement = connection.createStatement();
 			statement.setQueryTimeout(30);
-		  
-			ResultSet rs = statement.executeQuery("select distinct Sandwiches.* from Sandwiches where id IN (Select Sandwiches_id from Composition where Ingredients_comp_id = 1)");
+			SandwichWorker a = new SandwichWorker();
+			List<Sandwiches> arr = a.getSandwichByIngredient(connection, 1);
+			for (int i = 0; i < 3; i++) {
+				System.out.println(arr.get(i).getId());
+				}
+			/*ResultSet rs = statement.executeQuery("select distinct Sandwiches.* from Sandwiches where id IN (Select Sandwiches_id from Composition where Ingredients_comp_id = 1)");
 			//System.out.println(rs);
 			while(rs.next())
       		{
@@ -35,7 +42,7 @@ public class DemoApplication {
 				System.out.println("comment = " + rs.getString("comment"));
 				System.out.println("bread = " + rs.getString("bread"));
 				
-      		}
+      		}*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
