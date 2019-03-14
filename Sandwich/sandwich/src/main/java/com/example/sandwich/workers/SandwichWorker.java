@@ -27,12 +27,12 @@ public class SandwichWorker {
     public void updateSandwich(Connection connection, Integer id, String name, String type, Integer minutes, String bread, String comment) throws SQLException {
         String sql = "UPDATE Sandwiches SET name = ?, type = ?, minutes = ?, bread = ?, comment = ? WHERE id = ?";
         PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setInt(1, id);
-        pstm.setString(2, name);
-        pstm.setString(3, type);
-        pstm.setInt(4, minutes);
-        pstm.setString(5, bread);
-        pstm.setString(6, comment);
+        pstm.setString(1, name);
+        pstm.setString(2, type);
+        pstm.setInt(3, minutes);
+        pstm.setString(4, bread);
+        pstm.setString(5, comment);
+        pstm.setInt(6, id);
         pstm.executeUpdate();
     }
 
@@ -43,8 +43,8 @@ public class SandwichWorker {
         pstm.executeUpdate();
     }
 
-    public static List getAllSandwiches(Connection connection) throws SQLException {
-        List ll = new LinkedList();
+    public List <Sandwiches> getAllSandwiches(Connection connection) throws SQLException {
+        List<Sandwiches> ll = new LinkedList<Sandwiches>();
         String sql = "SELECT * FROM Sandwiches";
         PreparedStatement pstm = connection.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();

@@ -2,10 +2,10 @@ package com.example.sandwich.model;
 
 public class Sandwiches {
 
-    private long id;
+    private int id;
     private String name;
     private String type;
-    private long minutes;
+    private int minutes;
     private String bread;
     private String comment;
 
@@ -14,7 +14,7 @@ public class Sandwiches {
 
     }
 
-    public Sandwiches(Integer id, String name, String type, long minutes, String bread, String comment){
+    public Sandwiches(Integer id, String name, String type, int minutes, String bread, String comment){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -23,11 +23,11 @@ public class Sandwiches {
         this.comment = comment;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,11 +47,11 @@ public class Sandwiches {
         this.type = type;
     }
 
-    public long getMinutes() {
+    public int getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(long minutes) {
+    public void setMinutes(int minutes) {
         this.minutes = minutes;
     }
 
