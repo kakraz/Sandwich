@@ -24,7 +24,8 @@ public class SandwichWorker {
         pstm.executeUpdate();
     }
 
-    public void updateSandwich(Connection connection, Integer id, String name, String type, Integer minutes, String bread, String comment) throws SQLException {
+    public void updateSandwich(Connection connection, Integer id, String name, String type, Integer minutes,
+            String bread, String comment) throws SQLException {
         String sql = "UPDATE Sandwiches SET name = ?, type = ?, minutes = ?, bread = ?, comment = ? WHERE id = ?";
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setString(1, name);
@@ -41,15 +42,24 @@ public class SandwichWorker {
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
+        String sql1 = "DELETE FROM Composition WHERE Sandwiches_id = ?";
+        PreparedStatement pstm1 = connection.prepareStatement(sql1);
+        pstm1.setInt(1, id);
+        pstm1.executeUpdate();
+        String sql2 = "DELETE FROM Compability  WHERE Sandwiches_id = ?";
+        PreparedStatement pstm2 = connection.prepareStatement(sql2);
+        pstm2.setInt(1, id);
+        pstm2.executeUpdate();
     }
 
-    public List <Sandwiches> getAllSandwiches(Connection connection) throws SQLException {
+    public List<Sandwiches> getAllSandwiches(Connection connection) throws SQLException {
         List<Sandwiches> ll = new LinkedList<Sandwiches>();
         String sql = "SELECT * FROM Sandwiches";
         PreparedStatement pstm = connection.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
-        while (rs.next()){
-            Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"), rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
+        while (rs.next()) {
+            Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"),
+                    rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
             ll.add(sandwich);
         }
         return ll;
@@ -60,7 +70,8 @@ public class SandwichWorker {
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
-        Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"), rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
+        Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"),
+                rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
         return sandwich;
     }
 
@@ -69,7 +80,8 @@ public class SandwichWorker {
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setString(1, type);
         ResultSet rs = pstm.executeQuery();
-        Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"), rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
+        Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"),
+                rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
         return sandwich;
     }
 
@@ -79,7 +91,8 @@ public class SandwichWorker {
         pstm.setInt(1, id);
         pstm.setString(2, type);
         ResultSet rs = pstm.executeQuery();
-        Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"), rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
+        Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"),
+                rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
         return sandwich;
     }
 
@@ -89,8 +102,9 @@ public class SandwichWorker {
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setInt(1, comp_id);
         ResultSet rs = pstm.executeQuery();
-        while (rs.next()){
-            Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"), rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
+        while (rs.next()) {
+            Sandwiches sandwich = new Sandwiches(rs.getInt("id"), rs.getString("name"), rs.getString("type"),
+                    rs.getInt("minutes"), rs.getString("bread"), rs.getString("comment"));
             ll.add(sandwich);
         }
         return ll;

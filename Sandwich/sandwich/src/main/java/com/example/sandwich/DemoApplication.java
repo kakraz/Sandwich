@@ -8,8 +8,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.example.sandwich.model.Sandwiches;
-import com.example.sandwich.workers.SandwichWorker;
+import com.example.sandwich.model.*;
+
+import com.example.sandwich.workers.*;
 import java.util.List;
 
 @SpringBootApplication
@@ -25,11 +26,22 @@ public class DemoApplication {
 			connection = DriverManager.getConnection("jdbc:sqlite:/home/alex/android/Sandwich-1/Sandwich/sandwich/src/main/resources/sandw.db");
       		Statement statement = connection.createStatement();
 			statement.setQueryTimeout(30);
-			SandwichWorker a = new SandwichWorker();
-			List<Sandwiches> arr = a.getSandwichByIngredient(connection, 1);
+			SandwichWorker s = new SandwichWorker();
+			List<Sandwiches> s_arr = s.getSandwichByIngredient(connection, 1);
 			for (int i = 0; i < 3; i++) {
-				System.out.println(arr.get(i).getId());
+				System.out.println(s_arr.get(i).getId());
+				System.out.println(s_arr.get(i).getName());
+				System.out.println(s_arr.get(i).getType());
 				}
+
+			AdminWorker adm = new AdminWorker();
+			List<Admin> adm_arr = adm.getAllAdmins(connection);
+			for (int i = 0; i < 1; i++){
+				System.out.println(adm_arr.get(i).getAdm_id());
+				System.out.println(adm_arr.get(i).getLogin());
+				System.out.println(adm_arr.get(i).getPassword());
+			}
+
 			/*ResultSet rs = statement.executeQuery("select distinct Sandwiches.* from Sandwiches where id IN (Select Sandwiches_id from Composition where Ingredients_comp_id = 1)");
 			//System.out.println(rs);
 			while(rs.next())
