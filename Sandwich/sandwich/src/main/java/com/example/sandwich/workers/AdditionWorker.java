@@ -50,12 +50,12 @@ public class AdditionWorker {
 
     public List<Addition> getAdditionForSandwich(Connection connection, Integer id) throws SQLException {
         List<Addition> ll = new LinkedList<Addition>();
-        String sql = " Addition.complement from Addition inner join Compability inner join Sandwiches where (Addition.add_id = Compability.Addition_add_id and Sandwiches.id = Compability.Sandwiches_id) and Sandwiches.id = ?";
+        String sql = "select * from Addition where add_id in (select Additon_add_id from Compability where Sandwiches_id = ?)";
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
         while (rs.next()){
-            Addition addition = new Addition(rs.getInt("id"), rs.getString("complement"), rs.getString("type"));
+            Addition addition = new Addition(rs.getInt("add_id"), rs.getString("complement"), rs.getString("type"));
             ll.add(addition);
         }
         return ll;
