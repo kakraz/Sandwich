@@ -50,12 +50,12 @@ public class IngredientsWorker {
 
     public List<Ingredients> getIngredientsForSandwich(Connection connection, Integer id) throws SQLException {
         List<Ingredients> ll = new LinkedList<Ingredients>();
-        String sql = " Ingredients.component, Composition.ing_numb, Ingredients.unit from  Composition inner join Ingredients inner join Sandwiches where (Sandwiches.id = Composition.Sandwiches_id and Ingredients.comp_id = Composition.Ingredients_comp_id) and Sandwiches.id =  ?";
+        String sql = "select * from  Ingredients where comp_id IN (select Ingredients_comp_id from Composition where Sandwiches_id = ?)";
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
         while (rs.next()){
-            Ingredients Ingredients = new Ingredients(rs.getInt("id"), rs.getString("component"), rs.getString("unit"));
+            Ingredients Ingredients = new Ingredients(rs.getInt("comp_id"), rs.getString("component"), rs.getString("unit"));
             ll.add(Ingredients);
         }
         return ll;

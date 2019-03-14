@@ -26,21 +26,26 @@ public class DemoApplication {
 			connection = DriverManager.getConnection("jdbc:sqlite:/home/alex/android/Sandwich-1/Sandwich/sandwich/src/main/resources/sandw.db");
       		Statement statement = connection.createStatement();
 			statement.setQueryTimeout(30);
-			SandwichWorker s = new SandwichWorker();
+			/*SandwichWorker s = new SandwichWorker();
 			List<Sandwiches> s_arr = s.getSandwichByIngredient(connection, 1);
 			for (int i = 0; i < 3; i++) {
 				System.out.println(s_arr.get(i).getId());
 				System.out.println(s_arr.get(i).getName());
 				System.out.println(s_arr.get(i).getType());
-				}
-
-			AdminWorker adm = new AdminWorker();
-			List<Admin> adm_arr = adm.getAllAdmins(connection);
-			for (int i = 0; i < 1; i++){
-				System.out.println(adm_arr.get(i).getAdm_id());
-				System.out.println(adm_arr.get(i).getLogin());
-				System.out.println(adm_arr.get(i).getPassword());
+				System.out.println(s_arr.get(i).getMinutes());
+				System.out.println(s_arr.get(i).getBread());
+				System.out.println(s_arr.get(i).getComment());
+			}*/
+			CompositionWorker comp = new CompositionWorker();
+			IngredientsWorker ing = new IngredientsWorker();
+			List<Ingredients> i_arr = ing.getIngredientsForSandwich(connection, 1);
+			for (int i = 0; i < 1; i++) {
+				System.out.println(i_arr.get(i).getComp_id());
+				System.out.println(i_arr.get(i).getComponent());
+				System.out.println(comp.getNumbForSandwich(connection, 1, i_arr.get(i).getComp_id()));
+				System.out.println(i_arr.get(i).getUnit());
 			}
+			
 
 			/*ResultSet rs = statement.executeQuery("select distinct Sandwiches.* from Sandwiches where id IN (Select Sandwiches_id from Composition where Ingredients_comp_id = 1)");
 			//System.out.println(rs);
